@@ -6,8 +6,8 @@
     "require": {
         "php": "^8.0",
         "symfony/console": "^6.0",
-        "2lenet/crudit-bundle": "^1.0",
-        "2lenet/credential-bundle": "^1.0",
+        "2lenet/crudit-bundle": "*",
+        "2lenet/credential-bundle": "*",
         "symfony/framework-bundle": "^6.0",
         "symfony/http-kernel": "^6.0",
         "doctrine/orm": "^2.16",
