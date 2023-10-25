@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Service;
+namespace Lle\CruditPlatformBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
@@ -32,6 +32,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
             CrudConfigInterface::EXPORT,
         ];
         foreach ($this->cruditConfigs as $cruditConfig) {
+            /** @var CrudConfigInterface $cruditConfig */
             $rubrique = $cruditConfig->getName();
 
             // Page Roles
@@ -42,8 +43,20 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                     $cruditConfig->getName() . $key,
                     $i++
                 );
-            }
 
+                // Field Roles
+                foreach ($cruditConfig->getFields($key) as $fields) {
+                    if ($fields->getRole()) {
+                        $this->checkAndCreateCredential(
+                            $fields->getRole(),
+                            $rubrique,
+                            $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $fields->getRole())),
+                            $i++
+                        );
+                    }
+                }
+            }
+        
             // Actions Roles
             foreach ($cruditConfig->getListActions() as $action) {
                 if ($action->getPath()->getRole()) {
@@ -74,7 +87,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $this->checkAndCreateCredential(
                             $brickConfig->getRole(),
                             $rubrique,
-                            $key . "/" . strtolower(str_replace("ROLE_${rubrique}_","",$brickConfig->getRole())),
+                            $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $brickConfig->getRole())),
                             $i++
                         );
                     }
