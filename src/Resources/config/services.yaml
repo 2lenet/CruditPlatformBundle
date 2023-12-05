@@ -11,3 +11,5 @@ services:
         tags: [credential.warmup]
     Lle\CruditPlatformBundle\Service\WidgetCredentialWarmup:
         tags: [credential.warmup]
+    Lle\CruditPlatformBundle\Service\WorkflowCredentialWarmup:
+        tags: [credential.warmup]
