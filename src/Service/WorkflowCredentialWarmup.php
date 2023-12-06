@@ -32,7 +32,7 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
                 
                 $this->checkAndCreateCredential(
                     $role,
-                    null,
+                    strtoupper($workflowName),
                     $role,
                     0
                 );
