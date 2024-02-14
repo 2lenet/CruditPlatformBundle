@@ -67,12 +67,30 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $i++
                     );
                 }
+
+                if ($action->getRole()) {
+                    $this->checkAndCreateCredential(
+                        $action->getRole(),
+                        $rubrique,
+                        $action->getLabel(),
+                        $i++
+                    );
+                }
             }
             // Item Actions Roles
             foreach ($cruditConfig->getItemActions() as $action) {
                 if ($action->getPath()->getRole()) {
                     $this->checkAndCreateCredential(
                         $action->getPath()->getRole(),
+                        $rubrique,
+                        $action->getLabel(),
+                        $i++
+                    );
+                }
+
+                if ($action->getRole()) {
+                    $this->checkAndCreateCredential(
+                        $action->getRole(),
                         $rubrique,
                         $action->getLabel(),
                         $i++
