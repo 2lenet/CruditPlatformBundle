@@ -46,7 +46,18 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
 
                 // Field Roles
                 foreach ($cruditConfig->getFields($key) as $fields) {
-                    if ($fields->getRole()) {
+                    if (is_array($fields)) {
+                        foreach ($fields as $field) {
+                            if ($field->getRole()) {
+                                $this->checkAndCreateCredential(
+                                    $fields->getRole(),
+                                    $rubrique,
+                                    $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $fields->getRole())),
+                                    $i++
+                                );
+                            }
+                        }
+                    } elseif ($fields->getRole()) {
                         $this->checkAndCreateCredential(
                             $fields->getRole(),
                             $rubrique,
@@ -77,8 +88,30 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                     );
                 }
             }
+
             // Item Actions Roles
             foreach ($cruditConfig->getItemActions() as $action) {
+                if ($action->getPath()->getRole()) {
+                    $this->checkAndCreateCredential(
+                        $action->getPath()->getRole(),
+                        $rubrique,
+                        $action->getLabel(),
+                        $i++
+                    );
+                }
+
+                if ($action->getRole()) {
+                    $this->checkAndCreateCredential(
+                        $action->getRole(),
+                        $rubrique,
+                        $action->getLabel(),
+                        $i++
+                    );
+                }
+            }
+
+            // Show Actions Roles
+            foreach ($cruditConfig->getShowActions() as $action) {
                 if ($action->getPath()->getRole()) {
                     $this->checkAndCreateCredential(
                         $action->getPath()->getRole(),
