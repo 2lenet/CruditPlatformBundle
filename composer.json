@@ -11,10 +11,10 @@
         "2lenet/dashboard2-bundle": "*",
         "symfony/framework-bundle": "^6.0",
         "symfony/http-kernel": "^6.0",
-        "doctrine/orm": "^2.16",
-        "doctrine/doctrine-bundle": "^2.10",
+        "doctrine/orm": "^2.15 || ^3.0",
+        "doctrine/doctrine-bundle": "^2.0",
         "symfony/security-bundle": "^6.0",
-        "doctrine/persistence": "^3.2"
+        "doctrine/persistence": "^2.0 || ^3.0"
     },
     "autoload": {
         "psr-4": {
