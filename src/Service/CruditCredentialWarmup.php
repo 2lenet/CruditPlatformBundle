@@ -6,7 +6,9 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
+use Lle\CruditBundle\Contracts\BrickConfigInterface;
 use Lle\CruditBundle\Contracts\CrudConfigInterface;
+use Lle\CruditBundle\Dto\Field\Field;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
 
 class CruditCredentialWarmup implements CredentialWarmupInterface
@@ -45,25 +47,18 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                 );
 
                 // Field Roles
-                foreach ($cruditConfig->getFields($key) as $fields) {
-                    if (is_array($fields)) {
-                        foreach ($fields as $field) {
-                            if ($field->getRole()) {
-                                $this->checkAndCreateCredential(
-                                    $fields->getRole(),
-                                    $rubrique,
-                                    $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $fields->getRole())),
-                                    $i++
-                                );
-                            }
+                foreach ($cruditConfig->getFields($key) as $field) {
+                    $fields = $field instanceof Field ? [$field] : $field;
+
+                    foreach ($fields as $subField) {
+                        if ($subField->getRole()) {
+                            $this->checkAndCreateCredential(
+                                $subField->getRole(),
+                                $rubrique,
+                                $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $subField->getRole())),
+                                $i++
+                            );
                         }
-                    } elseif ($fields->getRole()) {
-                        $this->checkAndCreateCredential(
-                            $fields->getRole(),
-                            $rubrique,
-                            $key . "/" . strtolower(str_replace("ROLE_${rubrique}_", "", $fields->getRole())),
-                            $i++
-                        );
                     }
                 }
             }
@@ -132,7 +127,9 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
             }
 
             // Tabs Roles
-            foreach ($cruditConfig->getTabs() as $key => $brickConfigList) {
+            foreach ($cruditConfig->getTabs() as $key => $brickConfig) {
+                $brickConfigList = $brickConfig instanceof BrickConfigInterface ? [$brickConfig] : $brickConfig;
+
                 foreach ($brickConfigList as $brickConfig) {
                     if ($brickConfig->getRole()) {
                         $this->checkAndCreateCredential(
