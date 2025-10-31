@@ -5,11 +5,18 @@ services:
         autoconfigure: true
 
     Lle\CruditPlatformBundle\Service\FrontMenuCredentialWarmup:
-        tags: [credential.warmup]
-
+        tags:
+          - name: credential.warmup
+            priority: 20
     Lle\CruditPlatformBundle\Service\CruditCredentialWarmup:
-        tags: [credential.warmup]
+        tags:
+          - name: credential.warmup
+            priority: 20
     Lle\CruditPlatformBundle\Service\WidgetCredentialWarmup:
-        tags: [credential.warmup]
+        tags:
+          - name: credential.warmup
+            priority: 20
     Lle\CruditPlatformBundle\Service\WorkflowCredentialWarmup:
-        tags: [credential.warmup]
+        tags:
+          - name: credential.warmup
+            priority: 20
