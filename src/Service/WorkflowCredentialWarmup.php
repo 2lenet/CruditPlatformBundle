@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 use Symfony\Component\Workflow\Workflow;
 
 class WorkflowCredentialWarmup implements CredentialWarmupInterface
@@ -14,7 +14,7 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
     use CredentialWarmupTrait;
 
     public function __construct(
-        #[TaggedIterator('workflow')] protected iterable $workflows,
+        #[AutowireIterator('workflow')] protected iterable $workflows,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
     ) {

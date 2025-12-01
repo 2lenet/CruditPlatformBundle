@@ -9,14 +9,14 @@ use Lle\CredentialBundle\Service\CredentialWarmupTrait;
 use Lle\CruditBundle\Contracts\BrickConfigInterface;
 use Lle\CruditBundle\Contracts\CrudConfigInterface;
 use Lle\CruditBundle\Dto\Field\Field;
-use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
+use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
 
 class CruditCredentialWarmup implements CredentialWarmupInterface
 {
     use CredentialWarmupTrait;
 
     public function __construct(
-        #[TaggedIterator('crudit.config')] protected iterable $cruditConfigs,
+        #[AutowireIterator('crudit.config')] protected iterable $cruditConfigs,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
     ) {
@@ -25,8 +25,9 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
     public function warmUp(): void
     {
         $i = 0;
+        /** @var CrudConfigInterface $cruditConfig */
         foreach ($this->cruditConfigs as $cruditConfig) {
-            /** @var CrudConfigInterface $cruditConfig */
+            /** @var string $rubrique */
             $rubrique = $cruditConfig->getName();
 
             foreach (CrudConfigInterface::BASIC_ACTIONS_KEYS as $role => $label) {
@@ -127,6 +128,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
 
                         foreach ($brickConfigList as $brickConfig) {
                             if ($brickConfig->getRole()) {
+                                /** @var class-string $brickClass */
                                 $brickClass = get_class($brickConfig);
                                 $brickClassPart = explode('\\', $brickClass);
 
