@@ -33,8 +33,9 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
                 $this->checkAndCreateCredential(
                     $role,
                     strtoupper($workflowName),
-                    $role,
-                    0
+                    'credential.transition.' . strtolower($transition->getName()),
+                    0,
+                    type: 'credential.transition',
                 );
             }
         }

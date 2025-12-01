@@ -28,8 +28,9 @@ class WidgetCredentialWarmup implements CredentialWarmupInterface
             $this->checkAndCreateCredential(
                 $widget->getRole(),
                 $rubrique,
-                "Widget " . str_replace("ROLE_", "", $widget->getRole()),
-                $i++
+                $widget->getName(),
+                $i++,
+                type: 'credential.widget'
             );
         }
     }
