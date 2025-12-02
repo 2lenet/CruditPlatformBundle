@@ -6,7 +6,6 @@ use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
-use Lle\CruditBundle\Registry\MenuRegistry;
 use Lle\DashboardBundle\Service\WidgetProvider;
 
 class WidgetCredentialWarmup implements CredentialWarmupInterface
@@ -24,13 +23,16 @@ class WidgetCredentialWarmup implements CredentialWarmupInterface
     {
         $rubrique = "Widgets";
         $i = 0;
-        foreach ($this->widgetProvider->getWidgetTypes() as $widget) {
-            $this->checkAndCreateCredential(
-                $widget->getRole(),
-                $rubrique,
-                "Widget " . str_replace("ROLE_", "", $widget->getRole()),
-                $i++
-            );
+        if ($this->widgetProvider->getWidgetTypes()) {
+            foreach ($this->widgetProvider->getWidgetTypes() as $widget) {
+                $this->checkAndCreateCredential(
+                    $widget->getRole(),
+                    $rubrique,
+                    $widget->getName(),
+                    $i++,
+                    type: 'credential.widget'
+                );
+            }
         }
     }
 }
