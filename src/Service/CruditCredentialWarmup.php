@@ -113,15 +113,17 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
             }
 
             // Tabs Roles
-            if ($cruditConfig->getTabConfig() && $cruditConfig->getTabConfig()->getTabs()) {
-                foreach ($cruditConfig->getTabConfig()?->getTabs() as $tabs) {
-                    $this->checkAndCreateCredential(
-                        $tabs->getRole(),
-                        $rubrique,
-                        $tabs->getLabel(),
-                        $i++,
-                        type: 'credential.tab',
-                    );
+            if ($cruditConfig->getTabConfig()->getTabs()) {
+                foreach ($cruditConfig->getTabConfig()->getTabs() as $tabs) {
+                    if ($tabs->getRole()) {
+                        $this->checkAndCreateCredential(
+                            $tabs->getRole(),
+                            $rubrique,
+                            $tabs->getLabel(),
+                            $i++,
+                            type: 'credential.tab',
+                        );
+                    }
 
                     foreach ($tabs->getBricks() as $bricks) {
                         $brickConfigList = $bricks instanceof BrickConfigInterface ? [$bricks] : $bricks;
