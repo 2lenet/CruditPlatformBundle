@@ -125,6 +125,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         );
                     }
 
+                    /** @var array $bricks */
                     foreach ($tabs->getBricks() as $bricks) {
                         foreach ($bricks as $brickConfig) {
                             if ($brickConfig->getRole()) {
@@ -155,7 +156,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
         string $role,
         string $rubrique,
         string $label,
-        int $i
+        int $i,
     ): void {
         $this->checkAndCreateCredential(
             strtoupper('ROLE_' . $crudConfig->getName() . '_' . $role),
