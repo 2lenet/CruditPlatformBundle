@@ -26,8 +26,9 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
 
     public function warmUp(): void
     {
+        /** @var CrudConfigInterface $cruditConfig */
         foreach ($this->cruditConfigs as $cruditConfig) {
-            /** @var CrudConfigInterface $cruditConfig */
+            /** @var string $rubrique */
             $rubrique = $cruditConfig->getName();
 
             foreach (CrudConfigInterface::BASIC_ACTIONS_KEYS as $role => $label) {
