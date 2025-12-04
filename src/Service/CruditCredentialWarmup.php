@@ -103,6 +103,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $rubrique,
                         $action->getLabel(),
                         type: 'credential.action.show',
+                    );
                 }
             }
 
@@ -132,9 +133,9 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                                     $rubrique,
                                     $tabs->getLabel(),
                                     type: $brickConfig->getTitle() ?? (
-                                    'credential.'
-                                    . strtolower(str_replace('Config', '', end($brickClassPart)))
-                                ),
+                                        'credential.'
+                                        . strtolower(str_replace('Config', '', end($brickClassPart)))
+                                    ),
                                 );
                             }
                         }
