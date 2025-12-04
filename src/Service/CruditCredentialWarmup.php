@@ -7,7 +7,6 @@ use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Factory\CredentialFactory;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
-use Lle\CruditBundle\Contracts\BrickConfigInterface;
 use Lle\CruditBundle\Contracts\CrudConfigInterface;
 use Lle\CruditBundle\Dto\Field\Field;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
