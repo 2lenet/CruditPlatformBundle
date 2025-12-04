@@ -4,6 +4,7 @@ namespace Lle\CruditPlatformBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
+use Lle\CredentialBundle\Factory\CredentialFactory;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
 use Lle\CruditBundle\Registry\MenuRegistry;
@@ -17,6 +18,7 @@ class WidgetCredentialWarmup implements CredentialWarmupInterface
         protected WidgetProvider $widgetProvider,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
+        protected CredentialFactory $credentialFactory,
     ) {
     }
 
@@ -24,6 +26,7 @@ class WidgetCredentialWarmup implements CredentialWarmupInterface
     {
         $rubrique = "Widgets";
         $i = 0;
+<<<<<<< Updated upstream
         foreach ($this->widgetProvider->getWidgetTypes() as $widget) {
             $this->checkAndCreateCredential(
                 $widget->getRole(),
@@ -31,6 +34,17 @@ class WidgetCredentialWarmup implements CredentialWarmupInterface
                 "Widget " . str_replace("ROLE_", "", $widget->getRole()),
                 $i++
             );
+=======
+        if ($this->widgetProvider->getWidgetTypes()) {
+            foreach ($this->widgetProvider->getWidgetTypes() as $widget) {
+                $this->checkAndCreateCredential(
+                    $widget->getRole(),
+                    $rubrique,
+                    $widget->getName(),
+                    type: 'credential.widget'
+                );
+            }
+>>>>>>> Stashed changes
         }
     }
 }

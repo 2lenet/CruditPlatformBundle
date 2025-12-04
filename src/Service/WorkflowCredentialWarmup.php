@@ -4,6 +4,7 @@ namespace Lle\CruditPlatformBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
+use Lle\CredentialBundle\Factory\CredentialFactory;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
 use Symfony\Component\DependencyInjection\Attribute\TaggedIterator;
@@ -17,6 +18,7 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
         #[TaggedIterator('workflow')] protected iterable $workflows,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
+        protected CredentialFactory $credentialFactory,
     ) {
     }
 
@@ -33,8 +35,13 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
                 $this->checkAndCreateCredential(
                     $role,
                     strtoupper($workflowName),
+<<<<<<< Updated upstream
                     $role,
                     0
+=======
+                    'credential.transition.' . strtolower($transition->getName()),
+                    type: 'credential.transition',
+>>>>>>> Stashed changes
                 );
             }
         }
