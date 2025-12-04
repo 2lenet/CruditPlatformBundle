@@ -6,9 +6,9 @@
     "require": {
         "php": "^8.0",
         "symfony/console": "^7.0 || ^8.0",
-        "2lenet/crudit-bundle": "*",
-        "2lenet/credential-bundle": "*",
-        "2lenet/dashboard2-bundle": "*",
+        "2lenet/crudit-bundle": "^1.0",
+        "2lenet/credential-bundle": "^2.0",
+        "2lenet/dashboard2-bundle": "^2.0",
         "symfony/framework-bundle": "^7.0 || ^8.0",
         "symfony/http-kernel": "^7.0 || ^8.0",
         "doctrine/orm": "^2.15 || ^3.0",
