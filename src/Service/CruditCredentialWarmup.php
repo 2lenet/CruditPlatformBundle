@@ -43,7 +43,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
             foreach ($cruditConfig::ADDITIONAL_FIELDS_KEYS as $key) {
                 $this->createRoleForFields($cruditConfig, $key, $rubrique);
             }
-        
+
             // Actions Roles
             foreach ($cruditConfig->getListActions() as $action) {
                 if ($action->getPath()->getRole()) {
