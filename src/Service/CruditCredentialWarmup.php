@@ -124,25 +124,22 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         );
                     }
 
-                    /** @var array $bricks */
-                    foreach ($tabs->getBricks() as $bricks) {
-                        foreach ($bricks as $brickConfig) {
-                            if ($brickConfig->getRole()) {
-                                /** @var class-string $brickClass */
-                                $brickClass = get_class($brickConfig);
-                                $brickClassPart = explode('\\', $brickClass);
+                    foreach ($tabs->getBricks() as $brick) {
+                        if ($brick->getRole()) {
+                            /** @var class-string $brickClass */
+                            $brickClass = get_class($brickConfig);
+                            $brickClassPart = explode('\\', $brickClass);
 
-                                $this->checkAndCreateCredential(
-                                    $brickConfig->getRole(),
-                                    $rubrique,
-                                    $tabs->getLabel(),
-                                    $i++,
-                                    type: $brickConfig->getTitle() ?? (
-                                        'credential.'
-                                        . strtolower(str_replace('Config', '', end($brickClassPart)))
-                                    ),
-                                );
-                            }
+                            $this->checkAndCreateCredential(
+                                $brick->getRole(),
+                                $rubrique,
+                                $tabs->getLabel(),
+                                $i++,
+                                type: $brick->getTitle() ?? (
+                                    'credential.'
+                                    . strtolower(str_replace('Config', '', end($brickClassPart)))
+                                ),
+                            );
                         }
                     }
                 }
