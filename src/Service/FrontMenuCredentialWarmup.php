@@ -26,7 +26,7 @@ class FrontMenuCredentialWarmup implements CredentialWarmupInterface
         $rubrique = "Menu";
         $i = 0;
         foreach ($this->menuRegistry->getElements("") as $menuItem) {
-            echo("Menu " . str_replace("menu.", "", $menuItem->getId())."\n");
+            echo("Menu " . str_replace("menu.", "", $menuItem->getId()) . "\n");
             if ($menuItem->getRole()) {
                 $this->checkAndCreateCredential(
                     $menuItem->getRole(),
@@ -35,7 +35,7 @@ class FrontMenuCredentialWarmup implements CredentialWarmupInterface
                 );
             }
             foreach ($menuItem->getChildren() as $submenuItem) {
-                echo("↳ Sous menu " . str_replace("menu.", "", $submenuItem->getId())."\n");
+                echo("↳ Sous menu " . str_replace("menu.", "", $submenuItem->getId()) . "\n");
 
                 if ($submenuItem->getRole()) {
                     $this->checkAndCreateCredential(
