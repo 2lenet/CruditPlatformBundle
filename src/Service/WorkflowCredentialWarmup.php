@@ -4,6 +4,7 @@ namespace Lle\CruditPlatformBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
+use Lle\CredentialBundle\Factory\CredentialFactory;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
 use Symfony\Component\DependencyInjection\Attribute\AutowireIterator;
@@ -17,6 +18,7 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
         #[AutowireIterator('workflow')] protected iterable $workflows,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
+        protected CredentialFactory $credentialFactory,
     ) {
     }
 
@@ -34,7 +36,6 @@ class WorkflowCredentialWarmup implements CredentialWarmupInterface
                     $role,
                     strtoupper($workflowName),
                     'credential.transition.' . strtolower($transition->getName()),
-                    0,
                     type: 'credential.transition',
                 );
             }

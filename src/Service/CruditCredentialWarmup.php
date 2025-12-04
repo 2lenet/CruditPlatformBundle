@@ -4,6 +4,7 @@ namespace Lle\CruditPlatformBundle\Service;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
+use Lle\CredentialBundle\Factory\CredentialFactory;
 use Lle\CredentialBundle\Repository\CredentialRepository;
 use Lle\CredentialBundle\Service\CredentialWarmupTrait;
 use Lle\CruditBundle\Contracts\CrudConfigInterface;
@@ -18,28 +19,28 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
         #[AutowireIterator('crudit.config')] protected iterable $cruditConfigs,
         protected CredentialRepository $credentialRepository,
         protected EntityManagerInterface $entityManager,
+        protected CredentialFactory $credentialFactory,
     ) {
     }
 
     public function warmUp(): void
     {
-        $i = 0;
         /** @var CrudConfigInterface $cruditConfig */
         foreach ($this->cruditConfigs as $cruditConfig) {
             /** @var string $rubrique */
             $rubrique = $cruditConfig->getName();
 
             foreach (CrudConfigInterface::BASIC_ACTIONS_KEYS as $role => $label) {
-                $this->createRoleForAction($cruditConfig, $role, $rubrique, $label, $i++);
+                $this->createRoleForAction($cruditConfig, $role, $rubrique, $label);
             }
 
             // Page Roles
             foreach (CrudConfigInterface::BASIC_FIELDS_KEYS as $key) {
-                $this->createRoleForFields($cruditConfig, $key, $rubrique, $i++);
+                $this->createRoleForFields($cruditConfig, $key, $rubrique);
             }
 
             foreach ($cruditConfig::ADDITIONAL_FIELDS_KEYS as $key) {
-                $this->createRoleForFields($cruditConfig, $key, $rubrique, $i++);
+                $this->createRoleForFields($cruditConfig, $key, $rubrique);
             }
 
             // Actions Roles
@@ -49,7 +50,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getPath()->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.list',
                     );
                 }
@@ -59,7 +59,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.list',
                     );
                 }
@@ -72,7 +71,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getPath()->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.item',
                     );
                 }
@@ -82,7 +80,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.item',
                     );
                 }
@@ -95,7 +92,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getPath()->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.show',
                     );
                 }
@@ -105,7 +101,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        $i++,
                         type: 'credential.action.show',
                     );
                 }
@@ -119,7 +114,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                             $tabs->getRole(),
                             $rubrique,
                             $tabs->getLabel(),
-                            $i++,
                             type: 'credential.tab',
                         );
                     }
@@ -134,7 +128,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                                 $brick->getRole(),
                                 $rubrique,
                                 $tabs->getLabel(),
-                                $i++,
                                 type: $brick->getTitle() ?? (
                                     'credential.'
                                     . strtolower(str_replace('Config', '', end($brickClassPart)))
@@ -152,18 +145,16 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
         string $role,
         string $rubrique,
         string $label,
-        int $i,
     ): void {
         $this->checkAndCreateCredential(
             strtoupper('ROLE_' . $crudConfig->getName() . '_' . $role),
             $rubrique,
             strtolower('action.' . $label),
-            $i,
             type: 'credential.action',
         );
     }
 
-    public function createRoleForFields(CrudConfigInterface $cruditConfig, string $key, string $rubrique, int $i): void
+    public function createRoleForFields(CrudConfigInterface $cruditConfig, string $key, string $rubrique): void
     {
         foreach ($cruditConfig->getFields($key) as $field) {
             $fields = $field instanceof Field ? [$field] : $field;
@@ -174,7 +165,6 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $subField->getRole(),
                         $rubrique,
                         $subField->getLabel(),
-                        $i,
                         type: 'credential.field',
                     );
                 }
