@@ -127,7 +127,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                     foreach ($tabs->getBricks() as $brick) {
                         if ($brick->getRole()) {
                             /** @var class-string $brickClass */
-                            $brickClass = get_class($brickConfig);
+                            $brickClass = get_class($brick);
                             $brickClassPart = explode('\\', $brickClass);
 
                             $this->checkAndCreateCredential(
