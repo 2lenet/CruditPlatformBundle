@@ -50,7 +50,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getPath()->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        type: 'credential.action.list',
+                        type: $action->isBatch() ? 'credential.action_batch.list' : 'credential.action.list',
                     );
                 }
 
@@ -59,7 +59,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $action->getRole(),
                         $rubrique,
                         $action->getLabel(),
-                        type: 'credential.action.list',
+                        type: $action->isBatch() ? 'credential.action_batch.list' : 'credential.action.list',
                     );
                 }
             }
