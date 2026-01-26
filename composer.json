@@ -11,8 +11,6 @@
         "2lenet/dashboard2-bundle": "^2.0",
         "symfony/framework-bundle": "^7.0 || ^8.0",
         "symfony/http-kernel": "^7.0 || ^8.0",
-        "doctrine/orm": "^2.15 || ^3.0",
-        "doctrine/doctrine-bundle": "^2.0",
         "symfony/security-bundle": "^7.0 || ^8.0",
         "doctrine/persistence": "^2.0 || ^3.0"
     },
