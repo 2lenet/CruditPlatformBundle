@@ -26,12 +26,15 @@ class FrontMenuCredentialWarmup implements CredentialWarmupInterface
         $rubrique = 'MENU';
         $i = 0;
         foreach ($this->menuRegistry->getElements('') as $menuItem) {
+            /** @var class-string $class */
+            $class = get_class($menuItem);
+
             if ($menuItem->getRole()) {
                 echo("\n" . $menuItem->getRole());
                 $this->checkAndCreateCredential(
                     $menuItem->getRole(),
                     $rubrique,
-                    method_exists($menuItem, 'getLibelle') ? $menuItem->getLibelle() : $menuItem->getId(),
+                    method_exists($class, 'getLibelle') ? $menuItem->getLibelle() : $menuItem->getId(),
                     type: 'credential.menu',
                 );
             }
