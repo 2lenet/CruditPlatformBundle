@@ -23,25 +23,26 @@ class FrontMenuCredentialWarmup implements CredentialWarmupInterface
 
     public function warmUp(): void
     {
-        $rubrique = "Menu";
+        $rubrique = 'MENU';
         $i = 0;
-        foreach ($this->menuRegistry->getElements("") as $menuItem) {
-            echo("Menu " . str_replace("menu.", "", $menuItem->getId()) . "\n");
+        foreach ($this->menuRegistry->getElements('') as $menuItem) {
             if ($menuItem->getRole()) {
+                echo("\n" . $menuItem->getRole());
                 $this->checkAndCreateCredential(
                     $menuItem->getRole(),
                     $rubrique,
-                    "Menu " . str_replace("menu.", "", $menuItem->getId()),
+                    method_exists($menuItem, 'getLibelle') ? $menuItem->getLibelle() : $menuItem->getId(),
+                    type: 'credential.menu',
                 );
             }
             foreach ($menuItem->getChildren() as $submenuItem) {
-                echo("↳ Sous menu " . str_replace("menu.", "", $submenuItem->getId()) . "\n");
-
                 if ($submenuItem->getRole()) {
+                    echo("\n" . $submenuItem->getRole());
                     $this->checkAndCreateCredential(
                         $submenuItem->getRole(),
                         $rubrique,
-                        "↳ Sous menu " . str_replace("menu.", "", $submenuItem->getId()),
+                        method_exists($submenuItem, 'getLibelle') ? $submenuItem->getLibelle() : $submenuItem->getId(),
+                        type: 'credential.submenu',
                     );
                 }
             }

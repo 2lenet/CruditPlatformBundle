@@ -2,6 +2,7 @@
 
 namespace Lle\CruditPlatformBundle\Service;
 
+use App\Crudit\Config\CommandeLigneCrudConfig;
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Factory\CredentialFactory;
@@ -159,6 +160,7 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
         foreach ($cruditConfig->getFields($key) as $field) {
             $fields = $field instanceof Field ? [$field] : $field;
 
+            /** @var Field $subField */
             foreach ($fields as $subField) {
                 if ($subField->getRole()) {
                     $this->checkAndCreateCredential(
@@ -166,6 +168,15 @@ class CruditCredentialWarmup implements CredentialWarmupInterface
                         $rubrique,
                         $subField->getLabel(),
                         type: 'credential.field',
+                    );
+                }
+
+                if ($subField->getOptions() && array_key_exists('editRole', $subField->getOptions())) {
+                    $this->checkAndCreateCredential(
+                        $subField->getOptions()['editRole'],
+                        $rubrique,
+                        $subField->getLabel(),
+                        type: 'credential.eip'
                     );
                 }
             }
