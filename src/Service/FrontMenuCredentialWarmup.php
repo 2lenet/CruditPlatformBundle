@@ -35,13 +35,17 @@ class FrontMenuCredentialWarmup implements CredentialWarmupInterface
                     type: 'credential.menu',
                 );
             }
+
             foreach ($menuItem->getChildren() as $submenuItem) {
+                /** @var class-string $class */
+                $class = get_class($submenuItem);
+
                 if ($submenuItem->getRole()) {
                     echo("\n" . $submenuItem->getRole());
                     $this->checkAndCreateCredential(
                         $submenuItem->getRole(),
                         $rubrique,
-                        method_exists($submenuItem, 'getLibelle') ? $submenuItem->getLibelle() : $submenuItem->getId(),
+                        method_exists($class, 'getLibelle') ? $submenuItem->getLibelle() : $submenuItem->getId(),
                         type: 'credential.submenu',
                     );
                 }

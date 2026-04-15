@@ -2,7 +2,6 @@
 
 namespace Lle\CruditPlatformBundle\Service;
 
-use App\Crudit\Config\CommandeLigneCrudConfig;
 use Doctrine\ORM\EntityManagerInterface;
 use Lle\CredentialBundle\Contracts\CredentialWarmupInterface;
 use Lle\CredentialBundle\Factory\CredentialFactory;
