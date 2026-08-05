@@ -4,6 +4,10 @@ services:
         public: false
         autoconfigure: true
 
+    Lle\CruditPlatformBundle\Service\CredentialCredentialWarmup:
+        tags:
+            - name: credential.warmup
+              priority: 20
     Lle\CruditPlatformBundle\Service\FrontMenuCredentialWarmup:
         tags:
           - name: credential.warmup
